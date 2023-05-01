@@ -9,6 +9,8 @@ import {
 import shortid from 'shortid'
 import TaskList from '../components/task-list'
 import ThemeToggle from '../components/theme-toggle'
+import Masthead from '../components/masthead'
+import AnimatedColorBox from '../components/animated-color-box'
 
 const initialData = [
   {
@@ -18,7 +20,7 @@ const initialData = [
   },
   {
     id: shortid.generate(),
-    subject: 'Make a React Native tutorial',
+    subject: 'Create an Expo React Native app',
     done: false
   }
 ]
@@ -63,12 +65,17 @@ export default function MainScreen() {
   }, [])
 
   return (
-    <Center 
-      _dark={{bg: 'blueGray.900'}} 
-      _light={{bg: 'blueGray.50'}} 
-      px={4} 
-      flex={1}
-    >
+    <AnimatedColorBox
+    flex={1}
+    bg={useColorModeValue('warmGray.50', 'primary.900')}
+    w="full"
+  >
+
+      <Masthead
+        title="What's up, Kevin!"
+        image={require('../assets/masthead.png')}
+      >
+      </Masthead>
 
       <VStack
         flex={1}
@@ -90,6 +97,6 @@ export default function MainScreen() {
         />
         <ThemeToggle/>
       </VStack>
-    </Center>
+    </AnimatedColorBox>
   )
 }
