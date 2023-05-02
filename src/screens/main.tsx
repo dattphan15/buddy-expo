@@ -1,16 +1,11 @@
 import React, { useCallback, useState } from 'react'
-import {
-  Text,
-  Box,
-  Center,
-  VStack,
-  useColorModeValue,
-} from 'native-base'
-import shortid from 'shortid'
-import TaskList from '../components/task-list'
-import ThemeToggle from '../components/theme-toggle'
-import Masthead from '../components/masthead'
+import { Icon, VStack, useColorModeValue, Fab } from 'native-base'
+import { AntDesign } from '@expo/vector-icons'
 import AnimatedColorBox from '../components/animated-color-box'
+import TaskList from '../components/task-list'
+import shortid from 'shortid'
+import Masthead from '../components/masthead'
+import NavBar from '../components/navbar'
 
 const initialData = [
   {
@@ -66,17 +61,16 @@ export default function MainScreen() {
 
   return (
     <AnimatedColorBox
-    flex={1}
-    bg={useColorModeValue('warmGray.50', 'primary.900')}
-    w="full"
-  >
-
+      flex={1}
+      bg={useColorModeValue('warmGray.50', 'primary.900')}
+      w="full"
+    >
       <Masthead
-        title="What's up, Kevin!"
+        title="What's up, Takuya!"
         image={require('../assets/masthead.png')}
       >
+        <NavBar />
       </Masthead>
-
       <VStack
         flex={1}
         space={1}
@@ -95,8 +89,27 @@ export default function MainScreen() {
           onRemoveItem={handleRemoveItem}
           editingItemId={editingItemId}
         />
-        <ThemeToggle/>
       </VStack>
+      <Fab
+        position="absolute"
+        renderInPortal={false}
+        size="sm"
+        icon={<Icon color="white" as={<AntDesign name="plus" />} size="sm" />}
+        colorScheme={useColorModeValue('blue', 'darkBlue')}
+        bg={useColorModeValue('blue.500', 'blue.400')}
+        onPress={() => {
+          const id = shortid.generate()
+          setData([
+            {
+              id,
+              subject: '',
+              done: false
+            },
+            ...data
+          ])
+          setEditingItemId(id)
+        }}
+      />
     </AnimatedColorBox>
   )
 }
